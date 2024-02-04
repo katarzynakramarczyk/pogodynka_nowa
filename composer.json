@@ -1,0 +1,16 @@
+{
+    "name": "krambkat/ai2-lab",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Krambkat\\Ai2Lab\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Katarzyna Kramarczyk"
+        }
+    ],
+    "require": {}
+}
