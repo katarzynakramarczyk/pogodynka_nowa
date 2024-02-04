@@ -12,7 +12,5 @@
             "name": "Katarzyna Kramarczyk"
         }
     ],
-    "require": {
-        "monolog/monolog": "^3.5"
-    }
+    "require": {}
 }
