@@ -28,13 +28,14 @@ class Location
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7)]
     private ?string $longitude = null;
 
-    #[ORM\OneToMany(targetEntity: Measurement::class, mappedBy: 'location')]
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Measurement::class)]
     private Collection $measurements;
 
     public function __construct()
     {
         $this->measurements = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -92,6 +93,36 @@ class Location
     /**
      * @return Collection<int, Measurement>
      */
+    public function getHumidity(): Collection
+    {
+        return $this->humidity;
+    }
+
+    public function addHumidity(Measurement $humidity): static
+    {
+        if (!$this->humidity->contains($humidity)) {
+            $this->humidity->add($humidity);
+            $humidity->setTemperature($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHumidity(Measurement $humidity): static
+    {
+        if ($this->humidity->removeElement($humidity)) {
+            // set the owning side to null (unless already changed)
+            if ($humidity->getTemperature() === $this) {
+                $humidity->setTemperature(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Measurement>
+     */
     public function getMeasurements(): Collection
     {
         return $this->measurements;
@@ -101,7 +132,7 @@ class Location
     {
         if (!$this->measurements->contains($measurement)) {
             $this->measurements->add($measurement);
-            $measurement->setLocation($this);
+            $measurement->setTemperature($this);
         }
 
         return $this;
@@ -111,11 +142,15 @@ class Location
     {
         if ($this->measurements->removeElement($measurement)) {
             // set the owning side to null (unless already changed)
-            if ($measurement->getLocation() === $this) {
-                $measurement->setLocation(null);
+            if ($measurement->getTemperature() === $this) {
+                $measurement->setTemperature(null);
             }
         }
 
         return $this;
+    }
+
+    public function __toString():string {
+        return $this->city . ' - ' . $this->country;
     }
 }

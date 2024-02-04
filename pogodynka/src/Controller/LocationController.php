@@ -17,7 +17,7 @@ class LocationController extends AbstractController
     #[Route('/', name: 'app_location_index', methods: ['GET'])]
     public function index(LocationRepository $locationRepository): Response
     {
-        return $this->render('location/city.html.twig', [
+        return $this->render('location/index.html.twig', [
             'locations' => $locationRepository->findAll(),
         ]);
     }
@@ -63,14 +63,17 @@ class LocationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Lokalizacja została zaktualizowana.');
+
             return $this->redirectToRoute('app_location_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('location/edit.html.twig', [
             'location' => $location,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_location_delete', methods: ['POST'])]
     public function delete(Request $request, Location $location, EntityManagerInterface $entityManager): Response

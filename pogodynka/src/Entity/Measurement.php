@@ -18,8 +18,26 @@ class Measurement
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: '0')]
-    private ?string $celsius = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
+
+    #[ORM\Column]
+    private ?float $temperature = null;
+
+    #[ORM\Column]
+    private ?int $humidity = null;
+
+    #[ORM\Column]
+    private ?int $pressure = null;
+
+    #[ORM\Column]
+    private ?int $cloudy = null;
+
+    #[ORM\Column]
+    private ?float $feels = null;
+
+    #[ORM\Column(length: 20)]
+    private ?string $air = null;
 
     public function getId(): ?int
     {
@@ -38,14 +56,86 @@ class Measurement
         return $this;
     }
 
-    public function getCelsius(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->celsius;
+        return $this->date;
     }
 
-    public function setCelsius(string $celsius): static
+    public function setDate(\DateTimeInterface $date): static
     {
-        $this->celsius = $celsius;
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getTemperature(): ?float
+    {
+        return $this->temperature;
+    }
+
+    public function setTemperature(float $temperature): static
+    {
+        $this->temperature = $temperature;
+
+        return $this;
+    }
+
+    public function getHumidity(): ?int
+    {
+        return $this->humidity;
+    }
+
+    public function setHumidity(int $humidity): static
+    {
+        $this->humidity = $humidity;
+
+        return $this;
+    }
+
+    public function getPressure(): ?int
+    {
+        return $this->pressure;
+    }
+
+    public function setPressure(int $pressure): static
+    {
+        $this->pressure = $pressure;
+
+        return $this;
+    }
+
+    public function getCloudy(): ?int
+    {
+        return $this->cloudy;
+    }
+
+    public function setCloudy(int $cloudy): static
+    {
+        $this->cloudy = $cloudy;
+
+        return $this;
+    }
+
+    public function getFeels(): ?float
+    {
+        return $this->feels;
+    }
+
+    public function setFeels(float $feels): static
+    {
+        $this->feels = $feels;
+
+        return $this;
+    }
+
+    public function getAir(): ?string
+    {
+        return $this->air;
+    }
+
+    public function setAir(string $air): static
+    {
+        $this->air = $air;
 
         return $this;
     }
